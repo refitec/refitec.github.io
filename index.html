@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #ffffff;
+            --accent-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2563eb 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2563eb 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="gradient" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:white;stop-opacity:0.1"/><stop offset="100%" style="stop-color:white;stop-opacity:0"/></radialGradient></defs><circle cx="20" cy="10" r="3" fill="url(%23gradient)"/><circle cx="80" cy="10" r="3" fill="url(%23gradient)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(30, 58, 138, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .brand-item {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .brand-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+        
+        .btn-call { background: #10b981; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-website { background: var(--primary-color); }
+        
+        .accordion-button:not(.collapsed) {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(30, 58, 138, 0.25);
+        }
+        
+        .pricing-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .carousel-item img {
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .area-item {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .area-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .modal-header {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .floating-buttons {
+                right: 15px;
+                bottom: 15px;
+            }
+            
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .hero-section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<title>Refitec Kenya › 0704843613 Washing Machine Repair, TV, Oven, Cooker</title>
+<meta name="description" content="Discover amazingly reliable Electronic Appliance Repair Services in Nairobi and Kenya. Get Affordable Television Repair Services, Microwave Repair, Fridge &amp; Freezer Services, Electric Cooker Maintenance, Home Theatre Repair in Nairobi, Electronic Appliance Installation, maintenance, and parts replacement service!"/>
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+<link rel="canonical" href="https://refitec.github.io" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Refrigrator Repair in Nairobi › 0704843613 Washing Machine Repair, TV, Oven, Cooker &raquo; Refitec Kenya › 0704843613" />
+<meta property="og:description" content="Discover amazingly reliable Electronic Appliance Repair Services in Nairobi and Kenya. Get Affordable Television Repair Services, Microwave Repair, Fridge &amp; Freezer Services, Electric Cooker Maintenance, Home Theatre Repair in Nairobi, Electronic Appliance Installation, maintenance, and parts replacement service!" />
+<meta property="og:url" content="https://refitec.github.io/" />
+<meta property="og:site_name" content="Refitec Kenya 0704843613" />
+<meta property="og:updated_time" content="2025-08-13T15:12:11+00:00" />
+<meta property="og:image" content="https://refitec.co.ke/wp-content/uploads/2025/06/1-refitec-kenya-electronics-repair-washing-machine-repair-fridge-cooker-oven-televison-.png" />
+<meta property="og:image:secure_url" content="https://refitec.co.ke/wp-content/uploads/2025/06/1-refitec-kenya-electronics-repair-washing-machine-repair-fridge-cooker-oven-televison-.png" />
+<meta property="og:image:width" content="1328" />
+<meta property="og:image:height" content="500" />
+<meta property="og:image:alt" content="refitec kenya electronics repair washing machine repair fridge cooker oven televison" />
+<meta property="og:image:type" content="image/png" />
+<meta property="article:published_time" content="2025-04-25T16:13:07+00:00" />
+<meta property="article:modified_time" content="2025-08-13T15:12:11+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Refrigrator Repair in Nairobi › 0704843613 Washing Machine Repair, TV, Oven, Cooker &raquo; Refitec Kenya › 0704843613" />
+<meta name="twitter:description" content="Reliable Electronic Appliance Repair Services in Nairobi and Kenya. Get Affordable Television Repair Services, Microwave Repair, Fridge &amp; Freezer Services, Electric Cooker Maintenance, Home Theatre Repair in Nairobi, Electronic Appliance Installation, maintenance, and parts replacement service!" />
+<meta name="twitter:image" content="https://refitec.co.ke/wp-content/uploads/2025/06/1-refitec-kenya-electronics-repair-washing-machine-repair-fridge-cooker-oven-televison-.png" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="Refitec Kenya" />
+<meta name="twitter:label2" content="Time to read" />
+<meta name="twitter:data2" content="4 minutes" />
+<script type="application/ld+json" class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":"Place","@id":"https://refitec.co.ke/#place","address":{"@type":"PostalAddress","streetAddress":"Waiyaki Way","addressLocality":"Westlands","addressRegion":"Nairobi","postalCode":"00802","addressCountry":"KE"}},{"@type":["LocalBusiness","Organization"],"@id":"https://refitec.co.ke/#organization","name":"Refitec Kenya 0704843613","url":"https://refitec.co.ke","sameAs":["https://www.facebook.com/refitec.co.ke"],"email":"info@refitec.co.ke","address":{"@type":"PostalAddress","streetAddress":"Waiyaki Way","addressLocality":"Westlands","addressRegion":"Nairobi","postalCode":"00802","addressCountry":"KE"},"logo":{"@type":"ImageObject","@id":"https://refitec.co.ke/#logo","url":"http://refitec.co.ke/wp-content/uploads/2025/05/logo.png","contentUrl":"http://refitec.co.ke/wp-content/uploads/2025/05/logo.png","caption":"Refitec Kenya 0704843613","inLanguage":"en-US","width":"512","height":"512"},"priceRange":"$$","openingHours":["Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday 09:00-17:00"],"description":"Get Affordable Television Repair in Nairobi, Home Theatre Repair in Nairobi, Microwave Repair, Freezer &amp; Fridge Repair Service in Nairobi, Electric Cooker Maintenance, Electronic Appliance Installation and spare parts replacement service!","legalName":"Refitec Kenya","location":{"@id":"https://refitec.co.ke/#place"},"image":{"@id":"https://refitec.co.ke/#logo"},"telephone":"+254704843613"},{"@type":"WebSite","@id":"https://refitec.co.ke/#website","url":"https://refitec.co.ke","name":"Refitec Kenya 0704843613","alternateName":"Refitec 0704843613","publisher":{"@id":"https://refitec.co.ke/#organization"},"inLanguage":"en-US","potentialAction":{"@type":"SearchAction","target":"https://refitec.co.ke/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"http://refitec.co.ke/wp-content/uploads/2025/06/APPLIANCE-SERVICE-1.png","url":"http://refitec.co.ke/wp-content/uploads/2025/06/APPLIANCE-SERVICE-1.png","width":"200","height":"200","inLanguage":"en-US"},{"@type":"WebPage","@id":"https://refitec.co.ke/#webpage","url":"https://refitec.co.ke/","name":"Refrigrator Repair in Nairobi \u203a 0704843613 Washing Machine Repair, TV, Oven, Cooker &raquo; Refitec Kenya \u203a 0704843613","datePublished":"2025-04-25T16:13:07+00:00","dateModified":"2025-08-13T15:12:11+00:00","about":{"@id":"https://refitec.co.ke/#organization"},"isPartOf":{"@id":"https://refitec.co.ke/#website"},"primaryImageOfPage":{"@id":"http://refitec.co.ke/wp-content/uploads/2025/06/APPLIANCE-SERVICE-1.png"},"inLanguage":"en-US"},{"@type":"Person","@id":"https://refitec.co.ke/author/admin/","name":"admin","url":"https://refitec.co.ke/author/admin/","image":{"@type":"ImageObject","@id":"https://refitec.co.ke/wp-content/litespeed/avatar/e0265af762c94648fa4345ec35288362.jpg?ver=1755112485","url":"https://refitec.co.ke/wp-content/litespeed/avatar/e0265af762c94648fa4345ec35288362.jpg?ver=1755112485","caption":"admin","inLanguage":"en-US"},"sameAs":["https://refitec.co.ke"],"worksFor":{"@id":"https://refitec.co.ke/#organization"}},{"@type":"Article","headline":"Refrigrator Repair in Nairobi \u203a 0704843613 Washing Machine Repair, TV, Oven, Cooker &raquo; Refitec Kenya \u203a","keywords":"Repair in Nairobi","datePublished":"2025-04-25T16:13:07+00:00","dateModified":"2025-08-13T15:12:11+00:00","author":{"@id":"https://refitec.co.ke/author/admin/","name":"admin"},"publisher":{"@id":"https://refitec.co.ke/#organization"},"description":"Discover amazingly reliable Electronic Appliance Repair Services in Nairobi and Kenya. Get Affordable Television Repair Services, Microwave Repair, Fridge &amp; Freezer Services, Electric Cooker Maintenance, Home Theatre Repair in Nairobi, Electronic Appliance Installation, maintenance, and parts replacement service!","name":"Refrigrator Repair in Nairobi \u203a 0704843613 Washing Machine Repair, TV, Oven, Cooker &raquo; Refitec Kenya \u203a","@id":"https://refitec.co.ke/#richSnippet","isPartOf":{"@id":"https://refitec.github.io/#webpage"},"image":{"@id":"http://refitec.co.ke/wp-content/uploads/2025/06/APPLIANCE-SERVICE-1.png"},"inLanguage":"en-US","mainEntityOfPage":{"@id":"https://refitec.github.io/#webpage"}}]}</script>
+<!-- /Rank Math WordPress SEO plugin -->
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="#">
+                <i class="fas fa-tools me-2"></i>Refitec Kenya › 0704843613
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#brands">Brands</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#areas">Areas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Professional Home Appliance Repair Services</h1>
+            <p class="lead mb-4">Expert repair services for all your home appliances in Nairobi County</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <h3><i class="fas fa-tshirt me-2"></i>Washing Machine Repair</h3>
+                                <p>Professional washing machine repair services for all brands</p>
+                            </div>
+                            <div class="carousel-item">
+                                <h3><i class="fas fa-snowflake me-2"></i>Refrigerator Repair</h3>
+                                <p>Keep your food fresh with our expert fridge repair services</p>
+                            </div>
+                            <div class="carousel-item">
+                                <h3><i class="fas fa-fire me-2"></i>Cooker & Oven Repair</h3>
+                                <p>Get your kitchen appliances working perfectly again</p>
+                            </div>
+                            <div class="carousel-item">
+                                <h3><i class="fas fa-tv me-2"></i>Television Repair</h3>
+                                <p>Expert TV repair services for all makes and models</p>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="tel:+254704843613" class="btn btn-light btn-lg me-3">
+                    <i class="fas fa-phone me-2"></i>Call Now
+                </a>
+                <a href="#services" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-tools me-2"></i>Our Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Our Services</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="service-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h4>Washing Machine Repair</h4>
+                        <p>Professional washing machine repair for all brands and models. From drum issues to electrical problems.</p>
+                        <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#washingMachineModal">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="service-icon">
+                            <i class="fas fa-snowflake"></i>
+                        </div>
+                        <h4>Refrigerator Repair</h4>
+                        <p>Expert fridge repair services including cooling issues, compressor problems, and electrical faults.</p>
+                        <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#fridgeModal">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="service-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h4>Cooker Repair</h4>
+                        <p>Professional cooker and stove repair services for gas and electric models.</p>
+                        <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#cookerModal">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="service-icon">
+                            <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <h4>Oven Repair</h4>
+                        <p>Complete oven repair services including heating elements, thermostats, and control panels.</p>
+                        <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#ovenModal">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="service-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <h4>Television Repair</h4>
+                        <p>Expert TV repair services for LCD, LED, OLED, and Smart TVs from all major brands.</p>
+                        <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#tvModal">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="service-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h4>Home Service</h4>
+                        <p>Convenient on-site repair services at your home or office with genuine parts and warranty.</p>
+                        <button class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#homeServiceModal">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section id="brands" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Washing Machine Brands We Service</h2>
+            <p class="text-center text-muted mb-4">We repair washing machines from all major brands with genuine parts and expert technicians</p>
+            <div class="brand-grid">
+                <div class="brand-item">SAMSUNG</div>
+                <div class="brand-item">LG</div>
+                <div class="brand-item">BEKO</div>
+                <div class="brand-item">BOSCH</div>
+                <div class="brand-item">WHIRLPOOL</div>
+                <div class="brand-item">ARISTON</div>
+                <div class="brand-item">VON HOTPOINT</div>
+                <div class="brand-item">SIEMENS</div>
+                <div class="brand-item">ELECTROLUX</div>
+                <div class="brand-item">RAMTONS</div>
+                <div class="brand-item">ELBA</div>
+                <div class="brand-item">AMANA</div>
+                <div class="brand-item">HOOVER</div>
+                <div class="brand-item">MIELE</div>
+                <div class="brand-item">ZANUSSI</div>
+                <div class="brand-item">PANASONIC</div>
+                <div class="brand-item">FISHER & PAYKEL</div>
+                <div class="brand-item">BRUHM</div>
+                <div class="brand-item">HITACHI</div>
+                <div class="brand-item">FRIGIDAIRE</div>
+                <div class="brand-item">HAIER</div>
+                <div class="brand-item">HP</div>
+                <div class="brand-item">CANDY</div>
+                <div class="brand-item">BAUKNECHT</div>
+                <div class="brand-item">DAEWOO</div>
+                <div class="brand-item">KITCHENAID</div>
+                <div class="brand-item">NEFF</div>
+                <div class="brand-item">IKEA</div>
+                <div class="brand-item">TOSHIBA</div>
+                <div class="brand-item">KENMORE</div>
+                <div class="brand-item">INDESIT</div>
+                <div class="brand-item">MIKA</div>
+                <div class="brand-item">SHARP</div>
+                <div class="brand-item">MAYTAG</div>
+                <div class="brand-item">GE</div>
+                <div class="brand-item">ASKO</div>
+                <div class="brand-item">SMEG</div>
+                <div class="brand-item">ARMCO</div>
+                <div class="brand-item">BUSH</div>
+                <div class="brand-item">SANYO</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Areas Covered -->
+    <section id="areas" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Areas We Cover</h2>
+            <p class="text-center text-muted mb-4">We provide home appliance repair services throughout Nairobi County</p>
+            <div class="areas-grid">
+                <div class="area-item">Westlands</div>
+                <div class="area-item">Karen</div>
+                <div class="area-item">Kilimani</div>
+                <div class="area-item">Lavington</div>
+                <div class="area-item">Kileleshwa</div>
+                <div class="area-item">Parklands</div>
+                <div class="area-item">Upperhill</div>
+                <div class="area-item">Hurlingham</div>
+                <div class="area-item">Muthaiga</div>
+                <div class="area-item">Spring Valley</div>
+                <div class="area-item">Runda</div>
+                <div class="area-item">Gigiri</div>
+                <div class="area-item">Riverside</div>
+                <div class="area-item">Kiambu Road</div>
+                <div class="area-item">Thika Road</div>
+                <div class="area-item">Ngong Road</div>
+                <div class="area-item">Mombasa Road</div>
+                <div class="area-item">Langata</div>
+                <div class="area-item">Embakasi</div>
+                <div class="area-item">Kasarani</div>
+                <div class="area-item">Ruaraka</div>
+                <div class="area-item">Mathare</div>
+                <div class="area-item">Starehe</div>
+                <div class="area-item">Kamukunji</div>
+                <div class="area-item">Makadara</div>
+                <div class="area-item">Njiru</div>
+                <div class="area-item">Kibra</div>
+                <div class="area-item">Roysambu</div>
+                <div class="area-item">Ruai</div>
+                <div class="area-item">Dandora</div>
+                <div class="area-item">Komarock</div>
+                <div class="area-item">Pipeline</div>
+                <div class="area-item">South B</div>
+                <div class="area-item">South C</div>
+                <div class="area-item">Buru Buru</div>
+                <div class="area-item">Umoja</div>
+                <div class="area-item">Donholm</div>
+                <div class="area-item">Kariobangi</div>
+                <div class="area-item">Nairobi West</div>
+                <div class="area-item">All Nairobi County</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Estimated Service Costs</h2>
+            <p class="text-center text-muted mb-4">Transparent pricing for quality repair services</p>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="pricing-table">
+                        <table class="table table-striped mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Service Type</th>
+                                    <th>Diagnostic Fee</th>
+                                    <th>Basic Repair</th>
+                                    <th>Major Repair</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Washing Machine Repair</strong></td>
+                                    <td>Ksh 800 - 1,200</td>
+                                    <td>Ksh 2,500 - 4,500</td>
+                                    <td>Ksh 5,000 - 12,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Refrigerator Repair</strong></td>
+                                    <td>Ksh 1,000 - 1,500</td>
+                                    <td>Ksh 3,000 - 5,000</td>
+                                    <td>Ksh 6,000 - 15,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cooker Repair</strong></td>
+                                    <td>Ksh 800 - 1,200</td>
+                                    <td>Ksh 2,000 - 4,000</td>
+                                    <td>Ksh 4,500 - 10,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oven Repair</strong></td>
+                                    <td>Ksh 800 - 1,200</td>
+                                    <td>Ksh 2,500 - 4,500</td>
+                                    <td>Ksh 5,000 - 12,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Television Repair</strong></td>
+                                    <td>Ksh 1,000 - 1,500</td>
+                                    <td>Ksh 3,000 - 6,000</td>
+                                    <td>Ksh 7,000 - 20,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Final cost depends on the specific problem, parts required, and appliance condition. 
+                            Free quotes provided after diagnosis. All repairs come with warranty.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How much does washing machine repair cost in Nairobi?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Washing machine repair costs in Nairobi range from Ksh 2,500 to Ksh 12,000 depending on the issue. Basic repairs like drain problems or door seal replacement cost Ksh 2,500-4,500, while major repairs like motor or drum replacement can cost Ksh 5,000-12,000. We provide free diagnosis and transparent pricing.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    Do you provide same-day washing machine repair service?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, we offer same-day repair services for urgent washing machine problems in Nairobi. Our technicians are available 7 days a week and can often fix common issues like drainage problems, door locks, and electrical faults on the same day, subject to parts availability.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    What washing machine brands do you repair in Nairobi?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We repair all major washing machine brands including Samsung, LG, Bosch, Whirlpool, Beko, Ariston, Von Hotpoint, Siemens, Electrolux, Ramtons, and many others. Our technicians are trained on both front-loading and top-loading machines from all manufacturers.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Do you offer warranty on washing machine repairs?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, we provide a 90-day warranty on all washing machine repairs and replaced parts. If the same problem occurs within the warranty period, we'll fix it at no additional cost. We use genuine parts whenever possible to ensure longevity of repairs.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    What are common washing machine problems you fix?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We fix all washing machine problems including: not draining, not spinning, not filling with water, excessive noise, door won't lock/unlock, not starting, electrical issues, timer problems, pump failures, motor issues, and bearing replacements.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    How long does washing machine repair take?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Most washing machine repairs take 1-3 hours to complete. Simple issues like clogged drains or faulty door seals can be fixed within an hour, while complex repairs like motor or transmission replacement may take 2-3 hours. We'll provide an estimated time after diagnosis.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                    Do you repair both front-load and top-load washing machines?
+                                </button>
+                            </h2>
+                            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, we repair both front-loading and top-loading washing machines. Our technicians are experienced with all types including fully automatic, semi-automatic, and smart washing machines from all major brands available in Nairobi.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                    What areas in Nairobi do you provide washing machine repair services?
+                                </button>
+                            </h2>
+                            <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We provide washing machine repair services throughout Nairobi County including Westlands, Karen, Kilimani, Lavington, Parklands, Upperhill, Hurlingham, Muthaiga, Embakasi, Kasarani, Langata, Kibra, and all other estates and areas within Nairobi County.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">
+                                    Do you carry spare parts for washing machine repairs?
+                                </button>
+                            </h2>
+                            <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, our technicians carry common spare parts for most washing machine brands. For specialized parts, we source genuine components from authorized dealers. We maintain good relationships with parts suppliers to ensure quick availability and competitive pricing.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq10">
+                                    How can I book a washing machine repair service?
+                                </button>
+                            </h2>
+                            <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You can book our washing machine repair service by calling +254704843613, sending us a WhatsApp message, or emailing info@refitec.co.ke. We'll schedule a convenient time for our technician to visit your location and provide expert repair services.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5><i class="fas fa-tools me-2"></i>Refitec Kenya</h5>
+                    <p>Professional home appliance repair services in Nairobi County. Expert technicians, genuine parts, and reliable service guaranteed.</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#services" class="text-white-50">Our Services</a></li>
+                        <li><a href="#brands" class="text-white-50">Brands We Service</a></li>
+                        <li><a href="#areas" class="text-white-50">Areas Covered</a></li>
+                        <li><a href="#pricing" class="text-white-50">Pricing</a></li>
+                        <li><a href="#faq" class="text-white-50">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Contact Info</h5>
+                    <p><i class="fas fa-phone me-2"></i>+254704843613</p>
+                    <p><i class="fas fa-envelope me-2"></i>info@refitec.co.ke</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Westlands, Nairobi Kenya</p>
+                    <p><i class="fas fa-globe me-2"></i><a href="https://refitec.co.ke/" class="text-white-50">refitec.co.ke</a></p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2024 Refitec Kenya. All rights reserved. | Professional Home Appliance Repair Services</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-buttons">
+        <a href="https://refitec.co.ke/" class="floating-btn btn-website" title="Visit Website">
+            <i class="fas fa-globe"></i>
+        </a>
+        <a href="https://wa.me/254704843613" class="floating-btn btn-whatsapp" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+254704843613" class="floating-btn btn-call" title="Call Now">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
+
+    <!-- Service Modals -->
+    <!-- Washing Machine Modal -->
+    <div class="modal fade" id="washingMachineModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-tshirt me-2"></i>Washing Machine Repair Services</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Our Washing Machine Repair Services Include:</h6>
+                    <ul>
+                        <li>Drainage system repair and cleaning</li>
+                        <li>Drum and bearing replacement</li>
+                        <li>Motor and transmission repair</li>
+                        <li>Door lock and seal replacement</li>
+                        <li>Control panel and timer repair</li>
+                        <li>Pump and filter replacement</li>
+                        <li>Electrical wiring and component repair</li>
+                        <li>Spin cycle and agitator issues</li>
+                        <li>Water inlet valve replacement</li>
+                        <li>Noise and vibration troubleshooting</li>
+                    </ul>
+                    <h6>Common Problems We Fix:</h6>
+                    <ul>
+                        <li>Machine not starting or turning on</li>
+                        <li>Not filling with water or draining properly</li>
+                        <li>Excessive noise during operation</li>
+                        <li>Door won't lock or unlock</li>
+                        <li>Not spinning or agitating</li>
+                        <li>Leaking water</li>
+                        <li>Error codes and digital display issues</li>
+                        <li>Clothes coming out dirty or soapy</li>
+                    </ul>
+                    <div class="alert alert-primary">
+                        <strong>Service Guarantee:</strong> 90-day warranty on all repairs with genuine parts and expert technicians.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Call for Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fridge Modal -->
+    <div class="modal fade" id="fridgeModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-snowflake me-2"></i>Refrigerator Repair Services</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Our Refrigerator Repair Services Include:</h6>
+                    <ul>
+                        <li>Compressor repair and replacement</li>
+                        <li>Thermostat and temperature control repair</li>
+                        <li>Door seal and gasket replacement</li>
+                        <li>Defrost system repair</li>
+                        <li>Ice maker and water dispenser repair</li>
+                        <li>Evaporator and condenser coil cleaning</li>
+                        <li>Fan motor replacement</li>
+                        <li>Electrical control board repair</li>
+                        <li>Refrigerant leak detection and repair</li>
+                        <li>Interior lighting and shelf repair</li>
+                    </ul>
+                    <h6>Common Problems We Fix:</h6>
+                    <ul>
+                        <li>Not cooling or freezing properly</li>
+                        <li>Making unusual noises</li>
+                        <li>Door not sealing properly</li>
+                        <li>Ice buildup or frost issues</li>
+                        <li>Water leaking inside or outside</li>
+                        <li>Compressor not running</li>
+                        <li>Temperature fluctuations</li>
+                        <li>High energy consumption</li>
+                    </ul>
+                    <div class="alert alert-primary">
+                        <strong>Expert Service:</strong> Certified technicians with experience on all major refrigerator brands.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Call for Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cooker Modal -->
+    <div class="modal fade" id="cookerModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-fire me-2"></i>Cooker Repair Services</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Our Cooker Repair Services Include:</h6>
+                    <ul>
+                        <li>Gas burner and control valve repair</li>
+                        <li>Electric heating element replacement</li>
+                        <li>Ignition system repair</li>
+                        <li>Thermostat and temperature control</li>
+                        <li>Gas safety valve replacement</li>
+                        <li>Control knob and switch repair</li>
+                        <li>Oven door seal replacement</li>
+                        <li>Gas leak detection and repair</li>
+                        <li>Electrical wiring and connection repair</li>
+                        <li>Grill and hob surface repair</li>
+                    </ul>
+                    <h6>Common Problems We Fix:</h6>
+                    <ul>
+                        <li>Gas burners not lighting or staying lit</li>
+                        <li>Electric elements not heating</li>
+                        <li>Uneven heating or temperature issues</li>
+                        <li>Gas smell or suspected leaks</li>
+                        <li>Control knobs not working properly</li>
+                        <li>Oven not reaching correct temperature</li>
+                        <li>Ignition problems</li>
+                        <li>Safety cut-off activating</li>
+                    </ul>
+                    <div class="alert alert-warning">
+                        <strong>Safety First:</strong> All gas work performed by certified gas technicians following safety standards.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Call for Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Oven Modal -->
+    <div class="modal fade" id="ovenModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-temperature-high me-2"></i>Oven Repair Services</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Our Oven Repair Services Include:</h6>
+                    <ul>
+                        <li>Heating element replacement (top and bottom)</li>
+                        <li>Thermostat calibration and replacement</li>
+                        <li>Fan motor and convection system repair</li>
+                        <li>Door seal and hinge replacement</li>
+                        <li>Control panel and timer repair</li>
+                        <li>Interior lighting replacement</li>
+                        <li>Self-cleaning cycle repair</li>
+                        <li>Gas valve and igniter repair (gas ovens)</li>
+                        <li>Insulation and cavity repair</li>
+                        <li>Safety interlock system repair</li>
+                    </ul>
+                    <h6>Common Problems We Fix:</h6>
+                    <ul>
+                        <li>Oven not heating up or reaching temperature</li>
+                        <li>Uneven cooking or hot spots</li>
+                        <li>Door not closing or sealing properly</li>
+                        <li>Timer and control functions not working</li>
+                        <li>Interior light not working</li>
+                        <li>Excessive heat loss</li>
+                        <li>Self-cleaning cycle malfunctioning</li>
+                        <li>Strange odors or smoke during operation</li>
+                    </ul>
+                    <div class="alert alert-primary">
+                        <strong>Professional Service:</strong> Expert repair for both electric and gas ovens with warranty coverage.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Call for Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TV Modal -->
+    <div class="modal fade" id="tvModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-tv me-2"></i>Television Repair Services</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Our Television Repair Services Include:</h6>
+                    <ul>
+                        <li>LCD/LED screen repair and replacement</li>
+                        <li>Power supply board repair</li>
+                        <li>Main board and control circuit repair</li>
+                        <li>Backlight and inverter repair</li>
+                        <li>Audio system and speaker repair</li>
+                        <li>Remote control and IR sensor repair</li>
+                        <li>HDMI and connection port repair</li>
+                        <li>Smart TV software troubleshooting</li>
+                        <li>Color and picture quality adjustment</li>
+                        <li>Tuner and signal reception repair</li>
+                    </ul>
+                    <h6>Common Problems We Fix:</h6>
+                    <ul>
+                        <li>TV not turning on or powering up</li>
+                        <li>No picture but sound is working</li>
+                        <li>Cracked or damaged screen</li>
+                        <li>Poor picture quality or color issues</li>
+                        <li>No sound or audio problems</li>
+                        <li>Remote control not responding</li>
+                        <li>Smart TV apps not working</li>
+                        <li>Lines or spots on the screen</li>
+                    </ul>
+                    <div class="alert alert-primary">
+                        <strong>All TV Types:</strong> We repair LCD, LED, OLED, Smart TVs, and traditional CRT televisions.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Call for Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Service Modal -->
+    <div class="modal fade" id="homeServiceModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-home me-2"></i>Home Service Information</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Why Choose Our Home Service?</h6>
+                    <ul>
+                        <li><strong>Convenient:</strong> We come to your location at a time that suits you</li>
+                        <li><strong>Professional:</strong> Certified and experienced technicians</li>
+                        <li><strong>Equipped:</strong> Fully equipped service vehicles with tools and spare parts</li>
+                        <li><strong>Reliable:</strong> On-time service with professional appearance</li>
+                        <li><strong>Safe:</strong> COVID-19 safety protocols followed</li>
+                        <li><strong>Transparent:</strong> Clear pricing with no hidden charges</li>
+                        <li><strong>Warranted:</strong> All repairs covered by comprehensive warranty</li>
+                    </ul>
+                    <h6>Our Service Process:</h6>
+                    <ol>
+                        <li>Call or WhatsApp to book an appointment</li>
+                        <li>Our technician arrives at the scheduled time</li>
+                        <li>Free diagnosis and problem assessment</li>
+                        <li>Clear explanation of the issue and repair cost</li>
+                        <li>Professional repair with genuine parts</li>
+                        <li>Testing and quality assurance</li>
+                        <li>Warranty documentation and care tips</li>
+                    </ol>
+                    <div class="alert alert-success">
+                        <strong>Service Hours:</strong> Monday to Sunday, 8:00 AM - 6:00 PM. Emergency repairs available.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Book Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-info-circle me-2"></i>About Refitec Kenya</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Who We Are</h6>
+                    <p>Refitec Kenya is a leading home appliance repair service provider based in Nairobi County. With years of experience in the industry, we specialize in professional repair services for washing machines, refrigerators, cookers, ovens, and televisions.</p>
+                    
+                    <h6>Our Mission</h6>
+                    <p>To provide reliable, professional, and affordable home appliance repair services to residents and businesses across Nairobi County, ensuring your appliances work efficiently and last longer.</p>
+                    
+                    <h6>Why Choose Us?</h6>
+                    <ul>
+                        <li><strong>Experienced Technicians:</strong> Our team consists of certified and experienced repair technicians</li>
+                        <li><strong>Genuine Parts:</strong> We use original and high-quality replacement parts</li>
+                        <li><strong>Comprehensive Warranty:</strong> 90-day warranty on all repairs and parts</li>
+                        <li><strong>Same-Day Service:</strong> Quick response times with same-day repairs when possible</li>
+                        <li><strong>Transparent Pricing:</strong> No hidden charges, clear upfront pricing</li>
+                        <li><strong>All Brands:</strong> We service all major appliance brands</li>
+                        <li><strong>Professional Service:</strong> Courteous, uniformed technicians with proper identification</li>
+                    </ul>
+                    
+                    <h6>Our Values</h6>
+                    <ul>
+                        <li>Quality workmanship and customer satisfaction</li>
+                        <li>Honesty and transparency in all dealings</li>
+                        <li>Continuous learning and skill development</li>
+                        <li>Environmental responsibility through proper disposal</li>
+                        <li>Building long-term customer relationships</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-phone me-2"></i>Contact Information</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Contact Details</h6>
+                            <div class="contact-info">
+                                <p><i class="fas fa-phone text-primary me-3"></i><strong>Phone:</strong><br>+254704843613</p>
+                                <p><i class="fas fa-envelope text-primary me-3"></i><strong>Email:</strong><br>info@refitec.co.ke</p>
+                                <p><i class="fas fa-map-marker-alt text-primary me-3"></i><strong>Address:</strong><br>Westlands, Nairobi Kenya</p>
+                                <p><i class="fas fa-globe text-primary me-3"></i><strong>Website:</strong><br><a href="https://refitec.co.ke/" target="_blank">refitec.co.ke</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Business Hours</h6>
+                            <table class="table table-sm">
+                                <tr><td>Monday - Friday</td><td>8:00 AM - 6:00 PM</td></tr>
+                                <tr><td>Saturday</td><td>8:00 AM - 5:00 PM</td></tr>
+                                <tr><td>Sunday</td><td>9:00 AM - 4:00 PM</td></tr>
+                                <tr><td>Emergency Service</td><td>Available 24/7</td></tr>
+                            </table>
+                            
+                            <h6>Quick Contact Options</h6>
+                            <div class="d-grid gap-2">
+                                <a href="tel:+254704843613" class="btn btn-success">
+                                    <i class="fas fa-phone me-2"></i>Call Now
+                                </a>
+                                <a href="https://wa.me/254704843613" class="btn btn-success" target="_blank">
+                                    <i class="fab fa-whatsapp me-2"></i>WhatsApp Chat
+                                </a>
+                                <a href="mailto:info@refitec.co.ke" class="btn btn-primary">
+                                    <i class="fas fa-envelope me-2"></i>Send Email
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h6>How to Reach Us</h6>
+                        <p>Contact us anytime for appliance repair services. We provide free quotes and same-day service appointments. Our customer service team is ready to help you with scheduling, pricing information, and any questions about our services.</p>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Emergency Repairs:</strong> For urgent appliance breakdowns, call us directly for emergency service availability.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="tel:+254704843613" class="btn btn-primary">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(30, 58, 138, 0.95)';
+            } else {
+                navbar.style.background = 'linear-gradient(135deg, var(--primary-color) 0%, #2563eb 100%)';
+            }
+        });
+
+        // Animate floating buttons on load
+        window.addEventListener('load', function() {
+            const floatingButtons = document.querySelectorAll('.floating-btn');
+            floatingButtons.forEach((btn, index) => {
+                btn.style.opacity = '0';
+                btn.style.transform = 'translateX(100px)';
+                setTimeout(() => {
+                    btn.style.transition = 'all 0.5s ease';
+                    btn.style.opacity = '1';
+                    btn.style.transform = 'translateX(0)';
+                }, 500 + (index * 200));
+            });
+        });
+
+        // Add click tracking for floating buttons
+        document.querySelectorAll('.floating-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>
+                                
